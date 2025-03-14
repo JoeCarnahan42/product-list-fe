@@ -42,18 +42,14 @@ const apiSlice = createSlice({
       .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
-        console.log("Loading...");
       })
       .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
-        console.log("Complete!");
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        console.log("Failed");
-        console.log(action.error.message);
       });
   },
 });
