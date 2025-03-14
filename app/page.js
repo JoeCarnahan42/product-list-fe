@@ -1,6 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { ProductList } from "./components/ProductList";
+import { NavBar } from "./components/NavBar";
 
 export default function Home() {
-  return <h1>Hello World!</h1>;
+  return (
+    <main>
+      <NavBar />
+      <ProductList />
+    </main>
+  );
 }
