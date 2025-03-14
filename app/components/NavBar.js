@@ -1,7 +1,7 @@
 "use client";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getProducts } from "../store/slices/apiSlice";
+import { getProducts, setFilter } from "../store/slices/apiSlice";
 
 export const NavBar = () => {
   useEffect(() => {
@@ -16,33 +16,13 @@ export const NavBar = () => {
   };
 
   const sortByCat = (e) => {
-    if (e.target.id === "Home") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
-    if (e.target.id === "Sports") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
-    if (e.target.id === "Health") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
-    if (e.target.id === "Music") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
-    if (e.target.id === "Baby") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
-    if (e.target.id === "Electronics") {
-      dispatch(getProducts({ category: e.target.id }));
-    }
+    dispatch(setFilter({ category: e.target.id }));
+    dispatch(getProducts({ category: e.target.id }));
   };
 
   const sortByPrice = (e) => {
-    if (e.target.id === "high") {
-      dispatch(getProducts({ price: "highest" }));
-    }
-    if (e.target.id === "low") {
-      dispatch(getProducts({ price: "lowest" }));
-    }
+    dispatch(setFilter({ price: e.target.id }));
+    dispatch(getProducts({ price: e.target.id }));
   };
 
   return (
@@ -129,7 +109,7 @@ export const NavBar = () => {
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
             <button
-              id="high"
+              id="highest"
               onClick={sortByPrice}
               className="dropdown-item"
               type="button"
@@ -137,7 +117,7 @@ export const NavBar = () => {
               High to low
             </button>
             <button
-              id="low"
+              id="lowest"
               onClick={sortByPrice}
               className="dropdown-item"
               type="button"

@@ -3,16 +3,18 @@ import axios from "axios";
 
 export const getProducts = createAsyncThunk(
   "getProducts",
-  async ({ category, query, price, page } = {}) => {
+  async (filters = {}, { getState }) => {
+    const state = getState();
+    const { category, query, price, page } = state.products.filters;
     const response = await axios.get("http://localhost:8000/products", {
       params: {
-        page,
-        price,
-        query,
-        category,
+        page: filters.page || page,
+        price: filters.price || price,
+        query: filters.query || query,
+        category: filters.category || category,
       },
     });
-    console.log(response.data);
+
     return response.data;
   }
 );
@@ -23,6 +25,17 @@ const apiSlice = createSlice({
     products: [],
     loading: false,
     error: null,
+    filters: {
+      category: "",
+      query: "",
+      price: "",
+      page: 1,
+    },
+  },
+  reducers: {
+    setFilter: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -44,5 +57,7 @@ const apiSlice = createSlice({
       });
   },
 });
+
+export const { setFilter } = apiSlice.actions;
 
 export default apiSlice.reducer;
